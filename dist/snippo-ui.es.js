@@ -1317,3 +1317,4 @@ export {
   Vt as createChromeApi,
   Qt as createWordpressApi
 };
+//# sourceMappingURL=snippo-ui.es.js.map
