@@ -2,11 +2,13 @@
 	"name": "snippo-ui",
 	"version": "1.0.0",
 	"description": "Reusable UI components and logic for Snippo snippet generation.",
-	"main": "react/SnippetsApp.js",
+	"main": "dist/SnippetsApp.cjs.js",
+	"module": "dist/SnippetsApp.es.js",
 	"exports": {
-		"./react/SnippetsApp": "./react/SnippetsApp.js",
-		"./react/api/wordpressApi": "./react/api/wordpressApi.js",
-		"./react/api/chromeApi": "./react/api/chromeApi.js"
+		".": {
+			"require": "./dist/SnippetsApp.cjs.js",
+			"import": "./dist/SnippetsApp.es.js"
+		}
 	},
 	"keywords": [
 		"ui",
@@ -23,15 +25,18 @@
 		"react": "^18.0.0 || ^19.0.0"
 	},
 	"devDependencies": {
+		"@vitejs/plugin-react": "^4.7.0",
 		"@wordpress/api-fetch": "^7.26.0",
 		"@wordpress/prettier-config": "^4.26.0",
-		"prettier": "npm:wp-prettier@^3.0.3"
+		"prettier": "npm:wp-prettier@^3.0.3",
+		"vite": "^7.0.5"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ernilambar/snippo-ui.git"
 	},
 	"scripts": {
-		"format": "prettier \"**/*.{css,js,json,mjs}\" --write"
+		"format": "prettier \"**/*.{css,js,json,mjs}\" --write",
+		"build": "vite build"
 	}
 }
