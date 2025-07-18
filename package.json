@@ -2,12 +2,12 @@
 	"name": "snippo-ui",
 	"version": "1.0.0",
 	"description": "Reusable UI components and logic for Snippo snippet generation.",
-	"main": "dist/SnippetsApp.cjs.js",
-	"module": "dist/SnippetsApp.es.js",
+	"main": "dist/snippo-ui.cjs.js",
+	"module": "dist/snippo-ui.es.js",
 	"exports": {
 		".": {
-			"require": "./dist/SnippetsApp.cjs.js",
-			"import": "./dist/SnippetsApp.es.js"
+			"require": "./dist/snippo-ui.cjs.js",
+			"import": "./dist/snippo-ui.es.js"
 		}
 	},
 	"keywords": [

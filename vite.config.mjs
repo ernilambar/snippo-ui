@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: 'react/SnippetsApp.jsx',
-      name: 'SnippetsApp',
-      fileName: (format) => `SnippetsApp.${format}.js`,
+      entry: 'react/index.js',
+      name: 'SnippoUI',
+      fileName: (format) => `snippo-ui.${format}.js`,
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
