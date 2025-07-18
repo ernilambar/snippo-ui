@@ -1,0 +1,18 @@
+# Exclude everything by default
+/*
+
+# But include these files/folders
+!react/
+!package.json
+!README.md
+
+# Exclude config, lock, and system files
+.pnpm-lock.yaml
+.editorconfig
+.gitignore
+.prettierignore
+.prettierrc.mjs
+.DS_Store
+.cursor/
+node_modules/
+.git/
