@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './SnippetsApp.css';
 
 const SnippetsApp = ( { api } ) => {
 	const [ snippets, setSnippets ] = useState( {} );
