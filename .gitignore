@@ -32,7 +32,6 @@ npm-debug.log
 *.diff
 *.err
 *.log
-*.map
 *.orig
 *.pyc
 *.rej
