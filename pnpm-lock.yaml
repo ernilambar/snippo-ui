@@ -18,6 +18,9 @@ importers:
       '@wordpress/api-fetch':
         specifier: ^7.26.0
         version: 7.26.0
+      '@wordpress/prettier-config':
+        specifier: ^4.26.0
+        version: 4.26.0(wp-prettier@3.0.3)
       prettier:
         specifier: npm:wp-prettier@^3.0.3
         version: wp-prettier@3.0.3
@@ -167,6 +170,12 @@ packages:
     resolution: {integrity: sha512-YHzaUWlCuN2ynl47qbsdMkTGtP52+E1giDOdWBgUaSexUYjbeFxKFUzRMB0Wuh1psL80+VzvJOH/mU440KAJnA==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
     hasBin: true
+
+  '@wordpress/prettier-config@4.26.0':
+    resolution: {integrity: sha512-tcPFZKRG6lpoYo3Dbpw/Zlkbp6ZUVUDrcq8C9wIjKzuNjRssKxr2jBmCfoERMzNRE+3d0nlpqo+3iBFnlraKSA==}
+    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    peerDependencies:
+      prettier: '>=3'
 
   '@wordpress/url@4.26.0':
     resolution: {integrity: sha512-DFZ37e352xItHTMi2Sk2+O3YI87sWGdYtnMwTuSzhDgGHktKIJAfsEMJA259lclpf/7KPckQj8pbKrWcE9Sr7w==}
@@ -568,6 +577,10 @@ snapshots:
       memize: 2.1.0
       sprintf-js: 1.1.3
       tannin: 1.2.0
+
+  '@wordpress/prettier-config@4.26.0(wp-prettier@3.0.3)':
+    dependencies:
+      prettier: wp-prettier@3.0.3
 
   '@wordpress/url@4.26.0':
     dependencies:
