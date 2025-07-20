@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import './SnippetsApp.css';
 
-const SnippetsApp = ( { api } ) => {
+const SnippetsApp = ( { api, options = {} } ) => {
+	const { autoCopy = false, autoCopyDebounceDelay = 500 } = options;
+
 	const [ snippets, setSnippets ] = useState( {} );
 	const [ selected, setSelected ] = useState( '' );
 	const [ fields, setFields ] = useState( [] );
@@ -11,6 +13,32 @@ const SnippetsApp = ( { api } ) => {
 	const [ error, setError ] = useState( '' );
 	const [ copied, setCopied ] = useState( false );
 	const [ isRendering, setIsRendering ] = useState( false );
+	const copyTimeoutRef = useRef( null );
+
+	// Debounced copy function.
+	const debouncedCopy = useCallback( ( text ) => {
+		if ( copyTimeoutRef.current ) {
+			clearTimeout( copyTimeoutRef.current );
+		}
+
+		copyTimeoutRef.current = setTimeout( () => {
+			if ( text && autoCopy ) {
+				navigator.clipboard.writeText( text ).then( () => {
+					setCopied( true );
+					setTimeout( () => setCopied( false ), 1500 );
+				} );
+			}
+		}, autoCopyDebounceDelay ); // Configurable debounce delay for auto-copy.
+	}, [ autoCopy, autoCopyDebounceDelay ] );
+
+	// Cleanup timeout on unmount.
+	useEffect( () => {
+		return () => {
+			if ( copyTimeoutRef.current ) {
+				clearTimeout( copyTimeoutRef.current );
+			}
+		};
+	}, [] );
 
 	useEffect( () => {
 		api.getSnippets()
@@ -18,14 +46,14 @@ const SnippetsApp = ( { api } ) => {
 			.catch( ( err ) => setError( err.message || 'Error fetching snippets' ) );
 	}, [ api ] );
 
-	// Function to replace placeholders in the output
+	// Function to replace placeholders in the output.
 	const replacePlaceholders = useCallback( ( template, formData ) => {
 		let result = template;
 
-		// Replace each field placeholder with its value
+		// Replace each field placeholder with its value.
 		Object.keys( formData ).forEach( ( fieldName ) => {
 			const value = formData[ fieldName ] || '';
-			// Replace only {{fieldName}} pattern
+			// Replace only {{fieldName}} pattern.
 			const pattern = `{{${ fieldName }}}`;
 			result = result.replace( new RegExp( pattern.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ), 'g' ), value );
 		} );
@@ -33,13 +61,18 @@ const SnippetsApp = ( { api } ) => {
 		return result;
 	}, [] );
 
-	// Process output when raw output or form data changes
+	// Process output when raw output or form data changes.
 	useEffect( () => {
 		if ( rawOutput ) {
 			const processed = replacePlaceholders( rawOutput, form );
 			setProcessedOutput( processed );
+
+			// Auto-copy when enabled and we have processed output.
+			if ( autoCopy && processed ) {
+				debouncedCopy( processed );
+			}
 		}
-	}, [ rawOutput, form, replacePlaceholders ] );
+	}, [ rawOutput, form, replacePlaceholders, autoCopy, debouncedCopy ] );
 
 	useEffect( () => {
 		if ( selected && snippets[ selected ] ) {
@@ -51,7 +84,7 @@ const SnippetsApp = ( { api } ) => {
 			setCopied( false );
 			setIsRendering( false );
 
-			// Only call API once to get the template
+			// Only call API once to get the template.
 			if ( ! snippets[ selected ].fields || snippets[ selected ].fields.length === 0 ) {
 				setIsRendering( true );
 				api.renderSnippet( selected, {} )
@@ -64,7 +97,7 @@ const SnippetsApp = ( { api } ) => {
 						setIsRendering( false );
 					} );
 			} else {
-				// For snippets with fields, render once with empty data to get template
+				// For snippets with fields, render once with empty data to get template.
 				setIsRendering( true );
 				api.renderSnippet( selected, {} )
 					.then( ( res ) => {
@@ -112,6 +145,7 @@ const SnippetsApp = ( { api } ) => {
 					</option>
 				) ) }
 			</select>
+
 			{ fields.length > 0 && (
 				<div className="snippetsapp-form">
 					{ fields.map( ( field ) => (
