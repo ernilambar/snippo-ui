@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './SnippetsApp.css';
 
 const SnippetsApp = ( { api } ) => {
@@ -6,9 +6,11 @@ const SnippetsApp = ( { api } ) => {
 	const [ selected, setSelected ] = useState( '' );
 	const [ fields, setFields ] = useState( [] );
 	const [ form, setForm ] = useState( {} );
-	const [ output, setOutput ] = useState( '' );
+	const [ rawOutput, setRawOutput ] = useState( '' );
+	const [ processedOutput, setProcessedOutput ] = useState( '' );
 	const [ error, setError ] = useState( '' );
 	const [ copied, setCopied ] = useState( false );
+	const [ isRendering, setIsRendering ] = useState( false );
 
 	useEffect( () => {
 		api.getSnippets()
@@ -16,17 +18,63 @@ const SnippetsApp = ( { api } ) => {
 			.catch( ( err ) => setError( err.message || 'Error fetching snippets' ) );
 	}, [ api ] );
 
+	// Function to replace placeholders in the output
+	const replacePlaceholders = useCallback( ( template, formData ) => {
+		let result = template;
+
+		// Replace each field placeholder with its value
+		Object.keys( formData ).forEach( ( fieldName ) => {
+			const value = formData[ fieldName ] || '';
+			// Replace only {{fieldName}} pattern
+			const pattern = `{{${ fieldName }}}`;
+			result = result.replace( new RegExp( pattern.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ), 'g' ), value );
+		} );
+
+		return result;
+	}, [] );
+
+	// Process output when raw output or form data changes
+	useEffect( () => {
+		if ( rawOutput ) {
+			const processed = replacePlaceholders( rawOutput, form );
+			setProcessedOutput( processed );
+		}
+	}, [ rawOutput, form, replacePlaceholders ] );
+
 	useEffect( () => {
 		if ( selected && snippets[ selected ] ) {
 			setFields( snippets[ selected ].fields || [] );
 			setForm( {} );
-			setOutput( '' );
+			setRawOutput( '' );
+			setProcessedOutput( '' );
 			setError( '' );
 			setCopied( false );
+			setIsRendering( false );
+
+			// Only call API once to get the template
 			if ( ! snippets[ selected ].fields || snippets[ selected ].fields.length === 0 ) {
+				setIsRendering( true );
 				api.renderSnippet( selected, {} )
-					.then( ( res ) => setOutput( res.output ) )
-					.catch( ( err ) => setError( err.message || 'Error rendering snippet' ) );
+					.then( ( res ) => {
+						setRawOutput( res.output );
+						setIsRendering( false );
+					} )
+					.catch( ( err ) => {
+						setError( err.message || 'Error rendering snippet' );
+						setIsRendering( false );
+					} );
+			} else {
+				// For snippets with fields, render once with empty data to get template
+				setIsRendering( true );
+				api.renderSnippet( selected, {} )
+					.then( ( res ) => {
+						setRawOutput( res.output );
+						setIsRendering( false );
+					} )
+					.catch( ( err ) => {
+						setError( err.message || 'Error rendering snippet' );
+						setIsRendering( false );
+					} );
 			}
 		}
 	}, [ selected, snippets, api ] );
@@ -35,30 +83,14 @@ const SnippetsApp = ( { api } ) => {
 		setForm( { ...form, [ field ]: value } );
 	};
 
-	const handleSubmit = ( e ) => {
-		e.preventDefault();
-		setError( '' );
-		setOutput( '' );
-		setCopied( false );
-		api.renderSnippet( selected, form )
-			.then( ( res ) => setOutput( res.output ) )
-			.catch( ( err ) => setError( err.message || 'Error rendering snippet' ) );
-	};
-
 	const handleCopy = () => {
-		if ( output ) {
-			navigator.clipboard.writeText( output ).then( () => {
+		if ( processedOutput ) {
+			navigator.clipboard.writeText( processedOutput ).then( () => {
 				setCopied( true );
 				setTimeout( () => setCopied( false ), 1500 );
 			} );
 		}
 	};
-
-	const allRequiredFilled = fields.every(
-		( field ) =>
-			! field.required ||
-			( form[ field.name ] && form[ field.name ].toString().trim() !== '' )
-	);
 
 	const snippetOptions = Object.keys( snippets ).map( ( key ) => ( {
 		value: key,
@@ -81,7 +113,7 @@ const SnippetsApp = ( { api } ) => {
 				) ) }
 			</select>
 			{ fields.length > 0 && (
-				<form onSubmit={ handleSubmit } className="snippetsapp-form">
+				<div className="snippetsapp-form">
 					{ fields.map( ( field ) => (
 						<div key={ field.name } className="snippetsapp-field">
 							<label
@@ -95,36 +127,35 @@ const SnippetsApp = ( { api } ) => {
 								type="text"
 								value={ form[ field.name ] || '' }
 								onChange={ ( e ) => handleChange( field.name, e.target.value ) }
-								required={ field.required }
 								className="snippetsapp-input regular-text"
+								placeholder={ field.placeholder || `Enter ${ field.label || field.name }` }
 							/>
 						</div>
 					) ) }
-					<div className="snippetsapp-form-buttons">
-						<button
-							type="submit"
-							className="button button-primary snippetsapp-submit-button"
-							disabled={ ! allRequiredFilled }
-						>
-							Generate
-						</button>
-					</div>
-				</form>
+				</div>
 			) }
-			{ output && (
+			{ ( processedOutput || isRendering ) && (
 				<div className="snippetsapp-output-container">
 					<div className="snippetsapp-output-content">
-						<div
-							className="snippetsapp-output-text"
-							dangerouslySetInnerHTML={ { __html: output } }
-						/>
-						<button
-							type="button"
-							onClick={ handleCopy }
-							className="snippetsapp-copy-button"
-						>
-							{ copied ? 'Copied!' : 'Copy' }
-						</button>
+						{ isRendering && ! processedOutput && (
+							<div className="snippetsapp-loading">Generating snippet...</div>
+						) }
+						{ processedOutput && (
+							<>
+								<div
+									className="snippetsapp-output-text"
+									dangerouslySetInnerHTML={ { __html: processedOutput } }
+								/>
+								<button
+									type="button"
+									onClick={ handleCopy }
+									className="snippetsapp-copy-button"
+									disabled={ isRendering }
+								>
+									{ copied ? 'Copied!' : 'Copy' }
+								</button>
+							</>
+						) }
 					</div>
 				</div>
 			) }
