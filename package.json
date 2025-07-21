@@ -19,17 +19,25 @@
 	"license": "MIT",
 	"dependencies": {
 		"react": "^18.3.1",
+		"react-dom": "18.3.1",
 		"react-select": "^5.10.2"
 	},
 	"peerDependencies": {
 		"react": "^17.0.0 || ^18.0.0"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.28.0",
+		"@babel/preset-react": "^7.27.1",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.3.0",
 		"@vitejs/plugin-react": "^4.7.0",
+		"@vitest/ui": "^3.2.4",
 		"@wordpress/api-fetch": "^7.26.0",
 		"@wordpress/prettier-config": "^4.26.0",
+		"jsdom": "^26.1.0",
 		"prettier": "npm:wp-prettier@^3.0.3",
-		"vite": "^7.0.5"
+		"vite": "^7.0.5",
+		"vitest": "^3.2.4"
 	},
 	"repository": {
 		"type": "git",
@@ -37,6 +45,8 @@
 	},
 	"scripts": {
 		"format": "prettier \"**/*.{css,js,json,mjs}\" --write",
-		"build": "vite build"
+		"build": "vite build",
+		"test": "vitest run",
+		"vitest": "vitest"
 	}
 }
