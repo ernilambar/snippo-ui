@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Select from 'react-select';
+import SnippetSelectOption from './SnippetSelectOption';
 import './SnippetsApp.css';
 
 const SnippetsApp = ( { api, options = {} } ) => {
@@ -130,11 +131,19 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		}
 	};
 
-	const snippetOptions = Object.keys( snippets ).map( ( key ) => ( {
-		value: key,
-		label:
-			snippets[ key ].meta && snippets[ key ].meta.title ? snippets[ key ].meta.title : key,
-	} ) );
+	const snippetOptions = Object.keys( snippets ).map( ( key ) => {
+		const snippet = snippets[ key ];
+		const title = snippet.meta && snippet.meta.title ? snippet.meta.title : key;
+		const categories = snippet.categories && Array.isArray( snippet.categories ) ? snippet.categories : [];
+
+		return {
+			value: key,
+			label: title,
+			categories: categories.map( cat => cat.title || cat.slug ),
+		};
+	} );
+
+
 
 	// React Select custom styles to match existing design.
 	const selectStyles = {
@@ -177,6 +186,7 @@ const SnippetsApp = ( { api, options = {} } ) => {
 				className="snippo-select"
 				isClearable={ false }
 				isSearchable={ true }
+				components={ { Option: SnippetSelectOption } }
 			/>
 
 			{ fields.length > 0 && (
