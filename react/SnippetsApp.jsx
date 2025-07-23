@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import Select from 'react-select';
 import './SnippetsApp.css';
 
 const SnippetsApp = ( { api, options = {} } ) => {
@@ -116,6 +117,10 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		setForm( { ...form, [ field ]: value } );
 	};
 
+	const handleSelectChange = ( selectedOption ) => {
+		setSelected( selectedOption ? selectedOption.value : '' );
+	};
+
 	const handleCopy = () => {
 		if ( processedOutput ) {
 			navigator.clipboard.writeText( processedOutput ).then( () => {
@@ -131,20 +136,48 @@ const SnippetsApp = ( { api, options = {} } ) => {
 			snippets[ key ].meta && snippets[ key ].meta.title ? snippets[ key ].meta.title : key,
 	} ) );
 
+	// React Select custom styles to match existing design.
+	const selectStyles = {
+		control: ( provided, state ) => ( {
+			...provided,
+			maxWidth: 400,
+			border: '1px solid #ccc',
+			borderRadius: '4px',
+			boxShadow: state.isFocused ? '0 0 0 1px #007cba' : 'none',
+			'&:hover': {
+				borderColor: '#007cba',
+			},
+		} ),
+		option: ( provided, state ) => ( {
+			...provided,
+			backgroundColor: state.isSelected ? '#007cba' : state.isFocused ? '#f0f0f0' : 'white',
+			color: state.isSelected ? 'white' : 'black',
+			'&:hover': {
+				backgroundColor: state.isSelected ? '#007cba' : '#f0f0f0',
+			},
+		} ),
+		menu: ( provided ) => ( {
+			...provided,
+			zIndex: 9999,
+		} ),
+		placeholder: ( provided ) => ( {
+			...provided,
+			color: '#666',
+		} ),
+	};
+
 	return (
 		<div>
-			<select
-				value={ selected }
-				onChange={ ( e ) => setSelected( e.target.value ) }
-				style={ { maxWidth: 400 } }
-			>
-				<option value="">Select a snippet</option>
-				{ snippetOptions.map( ( option ) => (
-					<option key={ option.value } value={ option.value }>
-						{ option.label }
-					</option>
-				) ) }
-			</select>
+			<Select
+				value={ snippetOptions.find( option => option.value === selected ) || null }
+				onChange={ handleSelectChange }
+				options={ snippetOptions }
+				placeholder="Select a snippet"
+				styles={ selectStyles }
+				className="snippo-select"
+				isClearable={ false }
+				isSearchable={ true }
+			/>
 
 			{ fields.length > 0 && (
 				<div className="snippetsapp-form">

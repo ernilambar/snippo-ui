@@ -40,26 +40,56 @@ describe('SnippetsApp', () => {
     vi.clearAllMocks();
   });
 
-  it('renders select box and snippet options', async () => {
+  it('renders select box with placeholder', async () => {
     render(<SnippetsApp api={mockApi} />);
     await waitFor(() => expect(mockApi.getSnippets).toHaveBeenCalled());
     expect(screen.getByText('Select a snippet')).toBeInTheDocument();
-    expect(screen.getByText('Test Snippet')).toBeInTheDocument();
-    expect(screen.getByText('With Field')).toBeInTheDocument();
   });
 
   it('renders output when a snippet is selected', async () => {
     render(<SnippetsApp api={mockApi} />);
     await waitFor(() => expect(mockApi.getSnippets).toHaveBeenCalled());
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'snippet1' } });
+
+    // Click on the select to open dropdown
+    const selectInput = screen.getByRole('combobox');
+    fireEvent.mouseDown(selectInput);
+
+    // Wait for options to appear and select the first option
+    await waitFor(() => {
+      const option = screen.getByText('Test Snippet');
+      expect(option).toBeInTheDocument();
+    });
+
+    const option = screen.getByText('Test Snippet');
+    fireEvent.click(option);
+
     await waitFor(() => expect(mockApi.renderSnippet).toHaveBeenCalled());
-    expect(screen.getByText('Hello, World!')).toBeInTheDocument();
+
+    // Check for output content in the output container
+    await waitFor(() => {
+      const outputContainer = document.querySelector('.snippetsapp-output-text');
+      expect(outputContainer).toBeInTheDocument();
+      expect(outputContainer.textContent).toContain('Hello, World!');
+    });
   });
 
   it('renders form fields for snippet with fields and updates output', async () => {
     render(<SnippetsApp api={mockApi} />);
     await waitFor(() => expect(mockApi.getSnippets).toHaveBeenCalled());
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'snippet2' } });
+
+    // Click on the select to open dropdown
+    const selectInput = screen.getByRole('combobox');
+    fireEvent.mouseDown(selectInput);
+
+    // Wait for options to appear and select the second option
+    await waitFor(() => {
+      const option = screen.getByText('With Field');
+      expect(option).toBeInTheDocument();
+    });
+
+    const option = screen.getByText('With Field');
+    fireEvent.click(option);
+
     await waitFor(() => expect(mockApi.renderSnippet).toHaveBeenCalledWith('snippet2', {}));
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Alice' } });
@@ -76,10 +106,27 @@ describe('SnippetsApp', () => {
     mockApi.renderSnippet.mockReturnValueOnce(new Promise((r) => { resolve = r; }));
     render(<SnippetsApp api={mockApi} />);
     await waitFor(() => expect(mockApi.getSnippets).toHaveBeenCalled());
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'snippet1' } });
+
+    // Click on the select to open dropdown
+    const selectInput = screen.getByRole('combobox');
+    fireEvent.mouseDown(selectInput);
+
+    // Wait for options to appear and select the first option
+    await waitFor(() => {
+      const option = screen.getByText('Test Snippet');
+      expect(option).toBeInTheDocument();
+    });
+
+    const option = screen.getByText('Test Snippet');
+    fireEvent.click(option);
+
     expect(screen.getByText('Generating snippet...')).toBeInTheDocument();
     resolve({ output: 'Loaded!' });
-    await waitFor(() => expect(screen.getByText('Loaded!')).toBeInTheDocument());
+    await waitFor(() => {
+      const outputContainer = document.querySelector('.snippetsapp-output-text');
+      expect(outputContainer).toBeInTheDocument();
+      expect(outputContainer.textContent).toContain('Loaded!');
+    });
   });
 
   it('shows error message if API fails', async () => {
@@ -91,8 +138,28 @@ describe('SnippetsApp', () => {
   it('copies output to clipboard when copy button is clicked', async () => {
     render(<SnippetsApp api={mockApi} />);
     await waitFor(() => expect(mockApi.getSnippets).toHaveBeenCalled());
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'snippet1' } });
+
+    // Click on the select to open dropdown
+    const selectInput = screen.getByRole('combobox');
+    fireEvent.mouseDown(selectInput);
+
+    // Wait for options to appear and select the first option
+    await waitFor(() => {
+      const option = screen.getByText('Test Snippet');
+      expect(option).toBeInTheDocument();
+    });
+
+    const option = screen.getByText('Test Snippet');
+    fireEvent.click(option);
+
     await waitFor(() => expect(mockApi.renderSnippet).toHaveBeenCalled());
+
+    // Wait for the copy button to appear
+    await waitFor(() => {
+      const copyButton = screen.getByRole('button', { name: 'Copy' });
+      expect(copyButton).toBeInTheDocument();
+    });
+
     const copyButton = screen.getByRole('button', { name: 'Copy' });
     fireEvent.click(copyButton);
     await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith('Hello, World!'));
