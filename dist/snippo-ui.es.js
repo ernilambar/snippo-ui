@@ -65,14 +65,14 @@ function ia() {
     }
     var h = !1, g = !1, x = !1, E = !1, R = !1, M;
     M = Symbol.for("react.module.reference");
-    function U(d) {
+    function _(d) {
       return !!(typeof d == "string" || typeof d == "function" || d === i || d === a || R || d === n || d === c || d === f || E || d === b || h || g || x || typeof d == "object" && d !== null && (d.$$typeof === v || d.$$typeof === l || d.$$typeof === o || d.$$typeof === s || d.$$typeof === u || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
       d.$$typeof === M || d.getModuleId !== void 0));
     }
-    function q(d, A, F) {
+    function K(d, A, F) {
       var O = d.displayName;
       if (O)
         return O;
@@ -82,7 +82,7 @@ function ia() {
     function j(d) {
       return d.displayName || "Context";
     }
-    function Q(d) {
+    function U(d) {
       if (d == null)
         return null;
       if (typeof d.tag == "number" && y("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof d == "function")
@@ -112,14 +112,14 @@ function ia() {
             var F = d;
             return j(F._context) + ".Provider";
           case u:
-            return q(d, d.render, "ForwardRef");
+            return K(d, d.render, "ForwardRef");
           case l:
             var O = d.displayName || null;
-            return O !== null ? O : Q(d.type) || "Memo";
+            return O !== null ? O : U(d.type) || "Memo";
           case v: {
             var L = d, z = L._payload, N = L._init;
             try {
-              return Q(N(z));
+              return U(N(z));
             } catch {
               return null;
             }
@@ -127,14 +127,14 @@ function ia() {
         }
       return null;
     }
-    var S = Object.assign, T = 0, H, ee, _, fe, be, Fe, k;
+    var S = Object.assign, T = 0, H, q, ee, fe, be, Fe, k;
     function ie() {
     }
     ie.__reactDisabledLog = !0;
     function he() {
       {
         if (T === 0) {
-          H = console.log, ee = console.info, _ = console.warn, fe = console.error, be = console.group, Fe = console.groupCollapsed, k = console.groupEnd;
+          H = console.log, q = console.info, ee = console.warn, fe = console.error, be = console.group, Fe = console.groupCollapsed, k = console.groupEnd;
           var d = {
             configurable: !0,
             enumerable: !0,
@@ -167,10 +167,10 @@ function ia() {
               value: H
             }),
             info: S({}, d, {
-              value: ee
+              value: q
             }),
             warn: S({}, d, {
-              value: _
+              value: ee
             }),
             error: S({}, d, {
               value: fe
@@ -258,18 +258,18 @@ function ia() {
         if (me && O && typeof me.stack == "string") {
           for (var W = me.stack.split(`
 `), ge = O.stack.split(`
-`), K = W.length - 1, te = ge.length - 1; K >= 1 && te >= 0 && W[K] !== ge[te]; )
+`), $ = W.length - 1, te = ge.length - 1; $ >= 1 && te >= 0 && W[$] !== ge[te]; )
             te--;
-          for (; K >= 1 && te >= 0; K--, te--)
-            if (W[K] !== ge[te]) {
-              if (K !== 1 || te !== 1)
+          for (; $ >= 1 && te >= 0; $--, te--)
+            if (W[$] !== ge[te]) {
+              if ($ !== 1 || te !== 1)
                 do
-                  if (K--, te--, te < 0 || W[K] !== ge[te]) {
+                  if ($--, te--, te < 0 || W[$] !== ge[te]) {
                     var ye = `
-` + W[K].replace(" at new ", " at ");
+` + W[$].replace(" at new ", " at ");
                     return d.displayName && ye.includes("<anonymous>") && (ye = ye.replace("<anonymous>", d.displayName)), typeof d == "function" && Oe.set(d, ye), ye;
                   }
-                while (K >= 1 && te >= 0);
+                while ($ >= 1 && te >= 0);
               break;
             }
         }
@@ -335,8 +335,8 @@ function ia() {
                 throw ge.name = "Invariant Violation", ge;
               }
               W = d[N](A, N, O, F, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (K) {
-              W = K;
+            } catch ($) {
+              W = $;
             }
             W && !(W instanceof Error) && (at(L), y("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", O || "React class", F, N, typeof W), at(null)), W instanceof Error && !(W.message in Cn) && (Cn[W.message] = !0, at(L), y("Failed %s type: %s", F, W.message), at(null));
           }
@@ -449,9 +449,9 @@ function ia() {
         for (z in A)
           _e.call(A, z) && !Xi.hasOwnProperty(z) && (N[z] = A[z]);
         if (d && d.defaultProps) {
-          var K = d.defaultProps;
-          for (z in K)
-            N[z] === void 0 && (N[z] = K[z]);
+          var $ = d.defaultProps;
+          for (z in $)
+            N[z] === void 0 && (N[z] = $[z]);
         }
         if (W || ge) {
           var te = typeof d == "function" ? d.displayName || d.name || "Unknown" : d;
@@ -476,7 +476,7 @@ function ia() {
     function Fn() {
       {
         if (Xt.current) {
-          var d = Q(Xt.current.type);
+          var d = U(Xt.current.type);
           if (d)
             return `
 
@@ -511,7 +511,7 @@ Check the top-level render call using <` + F + ">.");
           return;
         wn[F] = !0;
         var O = "";
-        d && d._owner && d._owner !== Xt.current && (O = " It was passed a child from " + Q(d._owner.type) + "."), Ze(d), y('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', F, O), Ze(null);
+        d && d._owner && d._owner !== Xt.current && (O = " It was passed a child from " + U(d._owner.type) + "."), Ze(d), y('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', F, O), Ze(null);
       }
     }
     function Bn(d, A) {
@@ -548,11 +548,11 @@ Check the top-level render call using <` + F + ">.");
         else
           return;
         if (F) {
-          var O = Q(A);
+          var O = U(A);
           Bi(F, d.props, "prop", O, d);
         } else if (A.PropTypes !== void 0 && !Wt) {
           Wt = !0;
-          var L = Q(A);
+          var L = U(A);
           y("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", L || "Unknown");
         }
         typeof A.getDefaultProps == "function" && !A.getDefaultProps.isReactClassApproved && y("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
@@ -573,14 +573,14 @@ Check the top-level render call using <` + F + ">.");
     var Pn = {};
     function Tn(d, A, F, O, L, z) {
       {
-        var N = U(d);
+        var N = _(d);
         if (!N) {
           var W = "";
           (d === void 0 || typeof d == "object" && d !== null && Object.keys(d).length === 0) && (W += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
           var ge = Yi();
           ge ? W += ge : W += Fn();
-          var K;
-          d === null ? K = "null" : Ot(d) ? K = "array" : d !== void 0 && d.$$typeof === t ? (K = "<" + (Q(d.type) || "Unknown") + " />", W = " Did you accidentally export a JSX literal instead of a component?") : K = typeof d, y("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", K, W);
+          var $;
+          d === null ? $ = "null" : Ot(d) ? $ = "array" : d !== void 0 && d.$$typeof === t ? ($ = "<" + (U(d.type) || "Unknown") + " />", W = " Did you accidentally export a JSX literal instead of a component?") : $ = typeof d, y("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", $, W);
         }
         var te = Li(d, A, F, L, z);
         if (te == null)
@@ -599,7 +599,7 @@ Check the top-level render call using <` + F + ">.");
               Bn(ye, d);
         }
         if (_e.call(A, "key")) {
-          var We = Q(d), me = Object.keys(A).filter(function(Ki) {
+          var We = U(d), me = Object.keys(A).filter(function(Ki) {
             return Ki !== "key";
           }), Nt = me.length > 0 ? "{key: someKey, " + me.join(": ..., ") + ": ...}" : "{key: someKey}";
           if (!Pn[We + Nt]) {
@@ -744,24 +744,24 @@ function Te(e, t) {
 }
 var da = ["defaultInputValue", "defaultMenuIsOpen", "defaultValue", "inputValue", "menuIsOpen", "onChange", "onInputChange", "onMenuClose", "onMenuOpen", "value"];
 function fa(e) {
-  var t = e.defaultInputValue, r = t === void 0 ? "" : t, i = e.defaultMenuIsOpen, n = i === void 0 ? !1 : i, a = e.defaultValue, o = a === void 0 ? null : a, s = e.inputValue, u = e.menuIsOpen, c = e.onChange, f = e.onInputChange, l = e.onMenuClose, v = e.onMenuOpen, b = e.value, I = Te(e, da), p = de(s !== void 0 ? s : r), m = Be(p, 2), C = m[0], y = m[1], G = de(u !== void 0 ? u : n), h = Be(G, 2), g = h[0], x = h[1], E = de(b !== void 0 ? b : o), R = Be(E, 2), M = R[0], U = R[1], q = se(function(_, fe) {
-    typeof c == "function" && c(_, fe), U(_);
-  }, [c]), j = se(function(_, fe) {
+  var t = e.defaultInputValue, r = t === void 0 ? "" : t, i = e.defaultMenuIsOpen, n = i === void 0 ? !1 : i, a = e.defaultValue, o = a === void 0 ? null : a, s = e.inputValue, u = e.menuIsOpen, c = e.onChange, f = e.onInputChange, l = e.onMenuClose, v = e.onMenuOpen, b = e.value, I = Te(e, da), p = de(s !== void 0 ? s : r), m = Be(p, 2), C = m[0], y = m[1], G = de(u !== void 0 ? u : n), h = Be(G, 2), g = h[0], x = h[1], E = de(b !== void 0 ? b : o), R = Be(E, 2), M = R[0], _ = R[1], K = se(function(ee, fe) {
+    typeof c == "function" && c(ee, fe), _(ee);
+  }, [c]), j = se(function(ee, fe) {
     var be;
-    typeof f == "function" && (be = f(_, fe)), y(be !== void 0 ? be : _);
-  }, [f]), Q = se(function() {
+    typeof f == "function" && (be = f(ee, fe)), y(be !== void 0 ? be : ee);
+  }, [f]), U = se(function() {
     typeof v == "function" && v(), x(!0);
   }, [v]), S = se(function() {
     typeof l == "function" && l(), x(!1);
-  }, [l]), T = s !== void 0 ? s : C, H = u !== void 0 ? u : g, ee = b !== void 0 ? b : M;
+  }, [l]), T = s !== void 0 ? s : C, H = u !== void 0 ? u : g, q = b !== void 0 ? b : M;
   return B(B({}, I), {}, {
     inputValue: T,
     menuIsOpen: H,
-    onChange: q,
+    onChange: K,
     onInputChange: j,
     onMenuClose: S,
-    onMenuOpen: Q,
-    value: ee
+    onMenuOpen: U,
+    value: q
   });
 }
 function P() {
@@ -1594,9 +1594,9 @@ function qa() {
         }
       }
     }
-    var g = u, x = c, E = s, R = o, M = t, U = f, q = i, j = I, Q = b, S = r, T = a, H = n, ee = l, _ = !1;
+    var g = u, x = c, E = s, R = o, M = t, _ = f, K = i, j = I, U = b, S = r, T = a, H = n, q = l, ee = !1;
     function fe(w) {
-      return _ || (_ = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), be(w) || h(w) === u;
+      return ee || (ee = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), be(w) || h(w) === u;
     }
     function be(w) {
       return h(w) === c;
@@ -1634,7 +1634,7 @@ function qa() {
     function De(w) {
       return h(w) === l;
     }
-    J.AsyncMode = g, J.ConcurrentMode = x, J.ContextConsumer = E, J.ContextProvider = R, J.Element = M, J.ForwardRef = U, J.Fragment = q, J.Lazy = j, J.Memo = Q, J.Portal = S, J.Profiler = T, J.StrictMode = H, J.Suspense = ee, J.isAsyncMode = fe, J.isConcurrentMode = be, J.isContextConsumer = Fe, J.isContextProvider = k, J.isElement = ie, J.isForwardRef = he, J.isFragment = Ae, J.isLazy = ue, J.isMemo = ve, J.isPortal = ce, J.isProfiler = xe, J.isStrictMode = Oe, J.isSuspense = De, J.isValidElementType = G, J.typeOf = h;
+    J.AsyncMode = g, J.ConcurrentMode = x, J.ContextConsumer = E, J.ContextProvider = R, J.Element = M, J.ForwardRef = _, J.Fragment = K, J.Lazy = j, J.Memo = U, J.Portal = S, J.Profiler = T, J.StrictMode = H, J.Suspense = q, J.isAsyncMode = fe, J.isConcurrentMode = be, J.isContextConsumer = Fe, J.isContextProvider = k, J.isElement = ie, J.isForwardRef = he, J.isFragment = Ae, J.isLazy = ue, J.isMemo = ve, J.isPortal = ce, J.isProfiler = xe, J.isStrictMode = Oe, J.isSuspense = De, J.isValidElementType = G, J.typeOf = h;
   }()), J;
 }
 var Jn;
@@ -2274,7 +2274,7 @@ var Kn = function(t) {
   t.className, t.clearValue, t.cx, t.getStyles, t.getClassNames, t.getValue, t.hasValue, t.isMulti, t.isRtl, t.options, t.selectOption, t.selectProps, t.setValue, t.theme;
   var r = Te(t, Wu);
   return B({}, r);
-}, $ = function(t, r, i) {
+}, Q = function(t, r, i) {
   var n = t.cx, a = t.getStyles, o = t.getClassNames, s = t.className;
   return {
     css: a(r, t),
@@ -2380,7 +2380,7 @@ function $u(e) {
     maxHeight: t
   };
   if (!r || !r.offsetParent) return c;
-  var f = u.getBoundingClientRect(), l = f.height, v = r.getBoundingClientRect(), b = v.bottom, I = v.height, p = v.top, m = r.offsetParent.getBoundingClientRect(), C = m.top, y = o ? window.innerHeight : Du(u), G = qr(u), h = parseInt(getComputedStyle(r).marginBottom, 10), g = parseInt(getComputedStyle(r).marginTop, 10), x = C - g, E = y - p, R = x + G, M = l - G - p, U = b - y + G + h, q = G + p - g, j = 160;
+  var f = u.getBoundingClientRect(), l = f.height, v = r.getBoundingClientRect(), b = v.bottom, I = v.height, p = v.top, m = r.offsetParent.getBoundingClientRect(), C = m.top, y = o ? window.innerHeight : Du(u), G = qr(u), h = parseInt(getComputedStyle(r).marginBottom, 10), g = parseInt(getComputedStyle(r).marginTop, 10), x = C - g, E = y - p, R = x + G, M = l - G - p, _ = b - y + G + h, K = G + p - g, j = 160;
   switch (n) {
     case "auto":
     case "bottom":
@@ -2390,16 +2390,16 @@ function $u(e) {
           maxHeight: t
         };
       if (M >= I && !o)
-        return a && lt(u, U, j), {
+        return a && lt(u, _, j), {
           placement: "bottom",
           maxHeight: t
         };
       if (!o && M >= i || o && E >= i) {
-        a && lt(u, U, j);
-        var Q = o ? E - h : M - h;
+        a && lt(u, _, j);
+        var U = o ? E - h : M - h;
         return {
           placement: "bottom",
-          maxHeight: Q
+          maxHeight: U
         };
       }
       if (n === "auto" || o) {
@@ -2410,7 +2410,7 @@ function $u(e) {
         };
       }
       if (n === "bottom")
-        return a && Gt(u, U), {
+        return a && Gt(u, _), {
           placement: "bottom",
           maxHeight: t
         };
@@ -2422,13 +2422,13 @@ function $u(e) {
           maxHeight: t
         };
       if (R >= I && !o)
-        return a && lt(u, q, j), {
+        return a && lt(u, K, j), {
           placement: "top",
           maxHeight: t
         };
       if (!o && R >= i || o && x >= i) {
         var H = t;
-        return (!o && R >= i || o && x >= i) && (H = o ? x - g : R - g), a && lt(u, q, j), {
+        return (!o && R >= i || o && x >= i) && (H = o ? x - g : R - g), a && lt(u, K, j), {
           placement: "top",
           maxHeight: H
         };
@@ -2487,7 +2487,7 @@ var ti = function(t) {
   });
 }, to = function(t) {
   var r = t.children, i = t.innerRef, n = t.innerProps;
-  return V("div", P({}, $(t, "menu", {
+  return V("div", P({}, Q(t, "menu", {
     menu: !0
   }), {
     ref: i
@@ -2506,7 +2506,7 @@ var ti = function(t) {
   });
 }, io = function(t) {
   var r = t.children, i = t.innerProps, n = t.innerRef, a = t.isMulti;
-  return V("div", P({}, $(t, "menuList", {
+  return V("div", P({}, Q(t, "menuList", {
     "menu-list": !0,
     "menu-list--is-multi": a
   }), {
@@ -2522,7 +2522,7 @@ var ti = function(t) {
   });
 }, ao = ri, uo = ri, oo = function(t) {
   var r = t.children, i = r === void 0 ? "No options" : r, n = t.innerProps, a = Te(t, Uu);
-  return V("div", P({}, $(B(B({}, a), {}, {
+  return V("div", P({}, Q(B(B({}, a), {}, {
     children: i,
     innerProps: n
   }), "noOptionsMessage", {
@@ -2531,7 +2531,7 @@ var ti = function(t) {
   }), n), i);
 }, so = function(t) {
   var r = t.children, i = r === void 0 ? "Loading..." : r, n = t.innerProps, a = Te(t, Qu);
-  return V("div", P({}, $(B(B({}, a), {}, {
+  return V("div", P({}, Q(B(B({}, a), {}, {
     children: i,
     innerProps: n
   }), "loadingMessage", {
@@ -2578,7 +2578,7 @@ var ti = function(t) {
   if (!r && s !== "fixed" || !C) return null;
   var x = V("div", P({
     ref: g
-  }, $(B(B({}, t), {}, {
+  }, Q(B(B({}, t), {}, {
     offset: C.offset,
     position: s,
     rect: C.rect
@@ -2599,7 +2599,7 @@ var ti = function(t) {
   };
 }, go = function(t) {
   var r = t.children, i = t.innerProps, n = t.isDisabled, a = t.isRtl;
-  return V("div", P({}, $(t, "container", {
+  return V("div", P({}, Q(t, "container", {
     "--is-disabled": n,
     "--is-rtl": a
   }), i), r);
@@ -2618,7 +2618,7 @@ var ti = function(t) {
   });
 }, bo = function(t) {
   var r = t.children, i = t.innerProps, n = t.isMulti, a = t.hasValue;
-  return V("div", P({}, $(t, "valueContainer", {
+  return V("div", P({}, Q(t, "valueContainer", {
     "value-container": !0,
     "value-container--is-multi": n,
     "value-container--has-value": a
@@ -2632,7 +2632,7 @@ var ti = function(t) {
   };
 }, mo = function(t) {
   var r = t.children, i = t.innerProps;
-  return V("div", P({}, $(t, "indicatorsContainer", {
+  return V("div", P({}, Q(t, "indicatorsContainer", {
     indicators: !0
   }), i), r);
 }, tr, Io = ["size"], ho = ["innerProps", "isRtl", "size"];
@@ -2684,13 +2684,13 @@ var Ao = process.env.NODE_ENV === "production" ? {
   });
 }, yo = ui, xo = function(t) {
   var r = t.children, i = t.innerProps;
-  return V("div", P({}, $(t, "dropdownIndicator", {
+  return V("div", P({}, Q(t, "dropdownIndicator", {
     indicator: !0,
     "dropdown-indicator": !0
   }), i), r || V(ai, null));
 }, Eo = ui, Go = function(t) {
   var r = t.children, i = t.innerProps;
-  return V("div", P({}, $(t, "clearIndicator", {
+  return V("div", P({}, Q(t, "clearIndicator", {
     indicator: !0,
     "clear-indicator": !0
   }), i), r || V(bn, null));
@@ -2707,7 +2707,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   });
 }, So = function(t) {
   var r = t.innerProps;
-  return V("span", P({}, r, $(t, "indicatorSeparator", {
+  return V("span", P({}, r, Q(t, "indicatorSeparator", {
     "indicator-separator": !0
   })));
 }, Fo = hu(tr || (tr = Cu([`
@@ -2745,7 +2745,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   });
 }, Vo = function(t) {
   var r = t.innerProps, i = t.isRtl, n = t.size, a = n === void 0 ? 4 : n, o = Te(t, ho);
-  return V("div", P({}, $(B(B({}, o), {}, {
+  return V("div", P({}, Q(B(B({}, o), {}, {
     innerProps: r,
     isRtl: i,
     size: a
@@ -2790,7 +2790,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   var r = t.children, i = t.isDisabled, n = t.isFocused, a = t.innerRef, o = t.innerProps, s = t.menuIsOpen;
   return V("div", P({
     ref: a
-  }, $(t, "control", {
+  }, Q(t, "control", {
     control: !0,
     "control--is-disabled": i,
     "control--is-focused": n,
@@ -2806,7 +2806,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   };
 }, Wo = function(t) {
   var r = t.children, i = t.cx, n = t.getStyles, a = t.getClassNames, o = t.Heading, s = t.headingProps, u = t.innerProps, c = t.label, f = t.theme, l = t.selectProps;
-  return V("div", P({}, $(t, "group", {
+  return V("div", P({}, Q(t, "group", {
     group: !0
   }), u), V(o, P({}, s, {
     selectProps: l,
@@ -2834,7 +2834,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   var r = Kr(t);
   r.data;
   var i = Te(r, Oo);
-  return V("div", P({}, $(t, "groupHeading", {
+  return V("div", P({}, Q(t, "groupHeading", {
     "group-heading": !0
   }), i));
 }, Do = Wo, Zo = ["innerRef", "isDisabled", "isHidden", "inputClassName"], Ho = function(t, r) {
@@ -2878,7 +2878,7 @@ var Ao = process.env.NODE_ENV === "production" ? {
   }, oi);
 }, Jo = function(t) {
   var r = t.cx, i = t.value, n = Kr(t), a = n.innerRef, o = n.isDisabled, s = n.isHidden, u = n.inputClassName, c = Te(n, Zo);
-  return V("div", P({}, $(t, "input", {
+  return V("div", P({}, Q(t, "input", {
     "input-container": !0
   }), {
     "data-value": i || ""
@@ -2945,20 +2945,20 @@ var Ko = function(t) {
   var r = t.children, i = t.components, n = t.data, a = t.innerProps, o = t.isDisabled, s = t.removeProps, u = t.selectProps, c = i.Container, f = i.Label, l = i.Remove;
   return V(c, {
     data: n,
-    innerProps: B(B({}, $(t, "multiValue", {
+    innerProps: B(B({}, Q(t, "multiValue", {
       "multi-value": !0,
       "multi-value--is-disabled": o
     })), a),
     selectProps: u
   }, V(f, {
     data: n,
-    innerProps: B({}, $(t, "multiValueLabel", {
+    innerProps: B({}, Q(t, "multiValueLabel", {
       "multi-value__label": !0
     })),
     selectProps: u
   }, r), V(l, {
     data: n,
-    innerProps: B(B({}, $(t, "multiValueRemove", {
+    innerProps: B(B({}, Q(t, "multiValueRemove", {
       "multi-value__remove": !0
     })), {}, {
       "aria-label": "Remove ".concat(r || "option")
@@ -2986,7 +2986,7 @@ var Ko = function(t) {
   });
 }, ts = function(t) {
   var r = t.children, i = t.isDisabled, n = t.isFocused, a = t.isSelected, o = t.innerRef, s = t.innerProps;
-  return V("div", P({}, $(t, "option", {
+  return V("div", P({}, Q(t, "option", {
     option: !0,
     "option--is-disabled": i,
     "option--is-focused": n,
@@ -3007,7 +3007,7 @@ var Ko = function(t) {
   });
 }, is = function(t) {
   var r = t.children, i = t.innerProps;
-  return V("div", P({}, $(t, "placeholder", {
+  return V("div", P({}, Q(t, "placeholder", {
     placeholder: !0
   }), i), r);
 }, as = is, us = function(t, r) {
@@ -3026,7 +3026,7 @@ var Ko = function(t) {
   });
 }, os = function(t) {
   var r = t.children, i = t.isDisabled, n = t.innerProps;
-  return V("div", P({}, $(t, "singleValue", {
+  return V("div", P({}, Q(t, "singleValue", {
     "single-value": !0,
     "single-value--is-disabled": i
   }), n), r);
@@ -3159,9 +3159,9 @@ var bs = process.env.NODE_ENV === "production" ? {
   }, [l]), M = Ye(function() {
     var T = "";
     if (r && R.onChange) {
-      var H = r.option, ee = r.options, _ = r.removedValue, fe = r.removedValues, be = r.value, Fe = function(ce) {
+      var H = r.option, q = r.options, ee = r.removedValue, fe = r.removedValues, be = r.value, Fe = function(ce) {
         return Array.isArray(ce) ? null : ce;
-      }, k = _ || H || Fe(be), ie = k ? v(k) : "", he = ee || fe || void 0, Ae = he ? he.map(v) : [], ue = B({
+      }, k = ee || H || Fe(be), ie = k ? v(k) : "", he = q || fe || void 0, Ae = he ? he.map(v) : [], ue = B({
         // multiSelected items are usually items that have already been selected
         // or set by the user as a default value so we assume they are not disabled
         isDisabled: k && p(k, s),
@@ -3171,23 +3171,23 @@ var bs = process.env.NODE_ENV === "production" ? {
       T = R.onChange(ue);
     }
     return T;
-  }, [r, R, p, s, v]), U = Ye(function() {
-    var T = "", H = i || n, ee = !!(i && s && s.includes(i));
+  }, [r, R, p, s, v]), _ = Ye(function() {
+    var T = "", H = i || n, q = !!(i && s && s.includes(i));
     if (H && R.onFocus) {
-      var _ = {
+      var ee = {
         focused: H,
         label: v(H),
         isDisabled: p(H, s),
-        isSelected: ee,
+        isSelected: q,
         options: a,
         context: H === i ? "menu" : "value",
         selectValue: s,
         isAppleDevice: f
       };
-      T = R.onFocus(_);
+      T = R.onFocus(ee);
     }
     return T;
-  }, [i, n, v, p, R, a, s, f]), q = Ye(function() {
+  }, [i, n, v, p, R, a, s, f]), K = Ye(function() {
     var T = "";
     if (C && y.length && !g && R.onFilter) {
       var H = G({
@@ -3199,7 +3199,7 @@ var bs = process.env.NODE_ENV === "production" ? {
       });
     }
     return T;
-  }, [a, b, C, R, y, G, g]), j = r?.action === "initial-input-focus", Q = Ye(function() {
+  }, [a, b, C, R, y, G, g]), j = r?.action === "initial-input-focus", U = Ye(function() {
     var T = "";
     if (R.guidance) {
       var H = n ? "value" : C ? "menu" : "input";
@@ -3218,11 +3218,11 @@ var bs = process.env.NODE_ENV === "production" ? {
     id: "aria-selection"
   }, M), V("span", {
     id: "aria-focused"
-  }, U), V("span", {
+  }, _), V("span", {
     id: "aria-results"
-  }, q), V("span", {
+  }, K), V("span", {
     id: "aria-guidance"
-  }, Q));
+  }, U));
   return V(_t, null, V(rr, {
     id: c
   }, j && S), V(rr, {
@@ -4515,16 +4515,16 @@ var Ii = function(t) {
         }), y);
       if (m)
         return h.map(function(R, M) {
-          var U = R === g, q = "".concat(n.getOptionLabel(R), "-").concat(n.getOptionValue(R));
+          var _ = R === g, K = "".concat(n.getOptionLabel(R), "-").concat(n.getOptionValue(R));
           return /* @__PURE__ */ X.createElement(o, P({}, v, {
             components: {
               Container: s,
               Label: u,
               Remove: c
             },
-            isFocused: U,
+            isFocused: _,
             isDisabled: p,
-            key: q,
+            key: K,
             index: M,
             removeProps: {
               onClick: function() {
@@ -4533,8 +4533,8 @@ var Ii = function(t) {
               onTouchEnd: function() {
                 return n.removeValue(R);
               },
-              onMouseDown: function(Q) {
-                Q.preventDefault();
+              onMouseDown: function(U) {
+                U.preventDefault();
               }
             },
             data: R
@@ -4608,7 +4608,7 @@ var Ii = function(t) {
   }, {
     key: "renderMenu",
     value: function() {
-      var n = this, a = this.getComponents(), o = a.Group, s = a.GroupHeading, u = a.Menu, c = a.MenuList, f = a.MenuPortal, l = a.LoadingMessage, v = a.NoOptionsMessage, b = a.Option, I = this.commonProps, p = this.state.focusedOption, m = this.props, C = m.captureMenuScroll, y = m.inputValue, G = m.isLoading, h = m.loadingMessage, g = m.minMenuHeight, x = m.maxMenuHeight, E = m.menuIsOpen, R = m.menuPlacement, M = m.menuPosition, U = m.menuPortalTarget, q = m.menuShouldBlockScroll, j = m.menuShouldScrollIntoView, Q = m.noOptionsMessage, S = m.onMenuScrollToTop, T = m.onMenuScrollToBottom;
+      var n = this, a = this.getComponents(), o = a.Group, s = a.GroupHeading, u = a.Menu, c = a.MenuList, f = a.MenuPortal, l = a.LoadingMessage, v = a.NoOptionsMessage, b = a.Option, I = this.commonProps, p = this.state.focusedOption, m = this.props, C = m.captureMenuScroll, y = m.inputValue, G = m.isLoading, h = m.loadingMessage, g = m.minMenuHeight, x = m.maxMenuHeight, E = m.menuIsOpen, R = m.menuPlacement, M = m.menuPosition, _ = m.menuPortalTarget, K = m.menuShouldBlockScroll, j = m.menuShouldScrollIntoView, U = m.noOptionsMessage, S = m.onMenuScrollToTop, T = m.onMenuScrollToBottom;
       if (!E) return null;
       var H = function(ie, he) {
         var Ae = ie.type, ue = ie.data, ve = ie.isDisabled, ce = ie.isSelected, xe = ie.label, Oe = ie.value, De = p === ue, w = ve ? void 0 : function() {
@@ -4637,9 +4637,9 @@ var Ii = function(t) {
           isFocused: De,
           innerRef: De ? n.getFocusedOptionRef : void 0
         }), n.formatOptionLabel(ie.data, "menu"));
-      }, ee;
+      }, q;
       if (this.hasOptions())
-        ee = this.getCategorizedOptions().map(function(k) {
+        q = this.getCategorizedOptions().map(function(k) {
           if (k.type === "group") {
             var ie = k.data, he = k.options, Ae = k.index, ue = "".concat(n.getElementId("group"), "-").concat(Ae), ve = "".concat(ue, "-heading");
             return /* @__PURE__ */ X.createElement(o, P({}, I, {
@@ -4659,17 +4659,17 @@ var Ii = function(t) {
             return H(k, "".concat(k.index));
         });
       else if (G) {
-        var _ = h({
+        var ee = h({
           inputValue: y
         });
-        if (_ === null) return null;
-        ee = /* @__PURE__ */ X.createElement(l, I, _);
+        if (ee === null) return null;
+        q = /* @__PURE__ */ X.createElement(l, I, ee);
       } else {
-        var fe = Q({
+        var fe = U({
           inputValue: y
         });
         if (fe === null) return null;
-        ee = /* @__PURE__ */ X.createElement(v, I, fe);
+        q = /* @__PURE__ */ X.createElement(v, I, fe);
       }
       var be = {
         minMenuHeight: g,
@@ -4691,7 +4691,7 @@ var Ii = function(t) {
           captureEnabled: C,
           onTopArrive: S,
           onBottomArrive: T,
-          lockEnabled: q
+          lockEnabled: K
         }, function(ve) {
           return /* @__PURE__ */ X.createElement(c, P({}, I, {
             innerRef: function(xe) {
@@ -4705,11 +4705,11 @@ var Ii = function(t) {
             isLoading: G,
             maxHeight: ue,
             focusedOption: p
-          }), ee);
+          }), q);
         }));
       });
-      return U || M === "fixed" ? /* @__PURE__ */ X.createElement(f, P({}, I, {
-        appendTo: U,
+      return _ || M === "fixed" ? /* @__PURE__ */ X.createElement(f, P({}, I, {
+        appendTo: _,
         controlElement: this.controlRef,
         menuPlacement: R,
         menuPosition: M
@@ -4819,15 +4819,15 @@ var Ii = function(t) {
       var M = u != null && n !== o ? {
         inputIsHidden: u,
         inputIsHiddenAfterUpdate: void 0
-      } : {}, U = c, q = f && l;
-      return f && !q && (U = {
+      } : {}, _ = c, K = f && l;
+      return f && !K && (_ = {
         value: ft(C, y, y[0] || null),
         options: y,
         action: "initial-input-focus"
-      }, q = !l), c?.action === "initial-input-focus" && (U = null), B(B(B({}, G), M), {}, {
+      }, K = !l), c?.action === "initial-input-focus" && (_ = null), B(B(B({}, G), M), {}, {
         prevProps: n,
-        ariaSelection: U,
-        prevWasFocused: q
+        ariaSelection: _,
+        prevWasFocused: K
       });
     }
   }]), r;
@@ -4858,14 +4858,14 @@ const ic = ({ data: e, isSelected: t, isFocused: r, innerProps: i }) => /* @__PU
         "span",
         {
           style: {
-            backgroundColor: t ? "rgba(255, 255, 255, 0.2)" : "#e0e0e0",
+            backgroundColor: t ? "rgba(255, 255, 255, 0.2)" : n.color || "#dfe6ebff",
             color: t ? "white" : "#666",
             padding: "2px 6px",
             borderRadius: "12px",
             fontSize: "11px",
             fontWeight: "400"
           },
-          children: n
+          children: n.title
         },
         a
       )) })
@@ -4886,9 +4886,9 @@ const ic = ({ data: e, isSelected: t, isFocused: r, innerProps: i }) => /* @__PU
   }, [e]);
   const R = se((S, T) => {
     let H = S;
-    return Object.keys(T).forEach((ee) => {
-      const _ = T[ee] || "", fe = `{{${ee}}}`;
-      H = H.replace(new RegExp(fe.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), _);
+    return Object.keys(T).forEach((q) => {
+      const ee = T[q] || "", fe = `{{${q}}}`;
+      H = H.replace(new RegExp(fe.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), ee);
     }), H;
   }, []);
   Je(() => {
@@ -4909,20 +4909,20 @@ const ic = ({ data: e, isSelected: t, isFocused: r, innerProps: i }) => /* @__PU
   }, [o, n, e]);
   const M = (S, T) => {
     l({ ...f, [S]: T });
-  }, U = (S) => {
+  }, _ = (S) => {
     s(S ? S.value : "");
-  }, q = () => {
+  }, K = () => {
     I && navigator.clipboard.writeText(I).then(() => {
       G(!0), setTimeout(() => G(!1), 1500);
     });
   }, j = Object.keys(n).map((S) => {
-    const T = n[S], H = T.meta && T.meta.title ? T.meta.title : S, ee = T.categories && Array.isArray(T.categories) ? T.categories : [];
+    const T = n[S], H = T.meta && T.meta.title ? T.meta.title : S, q = T.categories && Array.isArray(T.categories) ? T.categories : [];
     return {
       value: S,
       label: H,
-      categories: ee.map((_) => _.title || _.slug)
+      categories: q
     };
-  }), Q = {
+  }), U = {
     control: (S, T) => ({
       ...S,
       maxWidth: 400,
@@ -4955,10 +4955,10 @@ const ic = ({ data: e, isSelected: t, isFocused: r, innerProps: i }) => /* @__PU
       rc,
       {
         value: j.find((S) => S.value === o) || null,
-        onChange: U,
+        onChange: _,
         options: j,
         placeholder: "Select a snippet",
-        styles: Q,
+        styles: U,
         className: "snippo-select",
         isClearable: !1,
         isSearchable: !0,
@@ -5000,7 +5000,7 @@ const ic = ({ data: e, isSelected: t, isFocused: r, innerProps: i }) => /* @__PU
           "button",
           {
             type: "button",
-            onClick: q,
+            onClick: K,
             className: "snippetsapp-copy-button",
             disabled: h,
             children: y ? "Copied!" : "Copy"

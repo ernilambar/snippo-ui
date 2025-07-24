@@ -139,7 +139,7 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		return {
 			value: key,
 			label: title,
-			categories: categories.map( cat => cat.title || cat.slug ),
+			categories: categories,
 		};
 	} );
 

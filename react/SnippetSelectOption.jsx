@@ -20,7 +20,9 @@ const SnippetSelectOption = ( { data, isSelected, isFocused, innerProps } ) => (
 					<span
 						key={ index }
 						style={ {
-							backgroundColor: isSelected ? 'rgba(255, 255, 255, 0.2)' : '#e0e0e0',
+							backgroundColor: isSelected
+								? 'rgba(255, 255, 255, 0.2)'
+								: category.color || '#dfe6ebff',
 							color: isSelected ? 'white' : '#666',
 							padding: '2px 6px',
 							borderRadius: '12px',
@@ -28,7 +30,7 @@ const SnippetSelectOption = ( { data, isSelected, isFocused, innerProps } ) => (
 							fontWeight: '400',
 						} }
 					>
-						{ category }
+						{ category.title }
 					</span>
 				) ) }
 			</div>
