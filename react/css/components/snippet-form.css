@@ -1,0 +1,17 @@
+.snippet-form {
+	margin-top: 1em;
+}
+
+.snippet-field {
+	margin-bottom: 0.5em;
+}
+
+.snippet-label {
+	display: block;
+	font-weight: 600;
+}
+
+.snippet-input {
+	width: 100%;
+	margin-top: 5px;
+}

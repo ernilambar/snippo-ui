@@ -67,7 +67,7 @@ describe('SnippetsApp', () => {
 
     // Check for output content in the output container
     await waitFor(() => {
-      const outputContainer = document.querySelector('.snippetsapp-output-text');
+      const outputContainer = document.querySelector('.snippet-output-text');
       expect(outputContainer).toBeInTheDocument();
       expect(outputContainer.textContent).toContain('Hello, World!');
     });
@@ -95,7 +95,7 @@ describe('SnippetsApp', () => {
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Alice' } });
     // Wait for output to update
     await waitFor(() => {
-      const output = document.querySelector('.snippetsapp-output-text');
+      const output = document.querySelector('.snippet-output-text');
       expect(output).not.toBeNull();
       expect(output.textContent).toContain('Hello, Alice!');
     });
@@ -123,7 +123,7 @@ describe('SnippetsApp', () => {
     expect(screen.getByText('Generating snippet...')).toBeInTheDocument();
     resolve({ output: 'Loaded!' });
     await waitFor(() => {
-      const outputContainer = document.querySelector('.snippetsapp-output-text');
+      const outputContainer = document.querySelector('.snippet-output-text');
       expect(outputContainer).toBeInTheDocument();
       expect(outputContainer.textContent).toContain('Loaded!');
     });
