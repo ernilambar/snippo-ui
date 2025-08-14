@@ -1,0 +1,55 @@
+/* React Select custom styles */
+.snippet-dropdown {
+	margin-bottom: 1em;
+	max-width: 400px;
+}
+
+.snippet-dropdown input,
+.snippet-dropdown input:focus {
+	box-shadow: none;
+}
+
+.snippet-dropdown .select__control {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	min-height: 36px;
+}
+
+.snippet-dropdown .select__control:hover {
+	border-color: #007cba;
+}
+
+.snippet-dropdown .select__control--is-focused {
+	border-color: #007cba;
+	box-shadow: 0 0 0 1px #007cba;
+}
+
+.snippet-dropdown .select__menu {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	max-width: 400px;
+	width: 100%;
+}
+
+.snippet-dropdown .select__option {
+	padding: 8px 12px;
+	cursor: pointer;
+}
+
+.snippet-dropdown .select__option--is-focused {
+	background-color: #f0f0f0;
+}
+
+.snippet-dropdown .select__option--is-selected {
+	background-color: #007cba;
+	color: white;
+}
+
+.snippet-dropdown .select__placeholder {
+	color: #666;
+}
+
+.snippet-dropdown .select__single-value {
+	color: #333;
+}

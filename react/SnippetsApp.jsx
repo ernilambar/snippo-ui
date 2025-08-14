@@ -1,10 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Select from 'react-select';
-import SnippetSelectOption from './SnippetSelectOption';
-import './SnippetsApp.css';
+import SnippetDropdown from './components/SnippetDropdown';
+import SnippetSidebar from './components/SnippetSidebar';
+import SnippetForm from './components/SnippetForm';
+import SnippetOutput from './components/SnippetOutput';
+import './css/snippets-app.css';
 
 const SnippetsApp = ( { api, options = {} } ) => {
-	const { autoCopy = false, autoCopyDebounceDelay = 500 } = options;
+	const {
+		autoCopy = false,
+		autoCopyDebounceDelay = 500,
+		layout = 'dropdown'
+	} = options;
 
 	const [ snippets, setSnippets ] = useState( {} );
 	const [ selected, setSelected ] = useState( '' );
@@ -114,7 +120,7 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		}
 	}, [ selected, snippets, api ] );
 
-	const handleChange = ( field, value ) => {
+	const handleFieldChange = ( field, value ) => {
 		setForm( { ...form, [ field ]: value } );
 	};
 
@@ -143,100 +149,48 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		};
 	} );
 
+	// Determine layout class
+	const layoutClass = `snippets-app--${ layout }`;
 
-
-	// React Select custom styles to match existing design.
-	const selectStyles = {
-		control: ( provided, state ) => ( {
-			...provided,
-			maxWidth: 400,
-			border: '1px solid #ccc',
-			borderRadius: '4px',
-			boxShadow: state.isFocused ? '0 0 0 1px #007cba' : 'none',
-			'&:hover': {
-				borderColor: '#007cba',
-			},
-		} ),
-		option: ( provided, state ) => ( {
-			...provided,
-			backgroundColor: state.isSelected ? '#007cba' : state.isFocused ? '#f0f0f0' : 'white',
-			color: state.isSelected ? 'white' : 'black',
-			'&:hover': {
-				backgroundColor: state.isSelected ? '#007cba' : '#f0f0f0',
-			},
-		} ),
-		menu: ( provided ) => ( {
-			...provided,
-			zIndex: 9999,
-		} ),
-		placeholder: ( provided ) => ( {
-			...provided,
-			color: '#666',
-		} ),
-	};
+	// Render content based on layout
+	const renderContent = () => (
+		<div className="snippets-app-content">
+			<SnippetForm
+				fields={ fields }
+				form={ form }
+				onFieldChange={ handleFieldChange }
+			/>
+			<SnippetOutput
+				processedOutput={ processedOutput }
+				isRendering={ isRendering }
+				onCopy={ handleCopy }
+				copied={ copied }
+			/>
+			{ error && <div className="snippet-error-message">{ error }</div> }
+		</div>
+	);
 
 	return (
-		<div>
-			<Select
-				value={ snippetOptions.find( option => option.value === selected ) || null }
-				onChange={ handleSelectChange }
-				options={ snippetOptions }
-				placeholder="Select a snippet"
-				styles={ selectStyles }
-				className="snippo-select"
-				isClearable={ false }
-				isSearchable={ true }
-				components={ { Option: SnippetSelectOption } }
-			/>
-
-			{ fields.length > 0 && (
-				<div className="snippetsapp-form">
-					{ fields.map( ( field ) => (
-						<div key={ field.name } className="snippetsapp-field">
-							<label
-								htmlFor={ `snippetsapp-field-${ field.name }` }
-								className="snippetsapp-label"
-							>
-								{ field.label || field.name }
-							</label>
-							<input
-								id={ `snippetsapp-field-${ field.name }` }
-								type="text"
-								value={ form[ field.name ] || '' }
-								onChange={ ( e ) => handleChange( field.name, e.target.value ) }
-								className="snippetsapp-input regular-text"
-								placeholder={ field.placeholder || `Enter ${ field.label || field.name }` }
-							/>
-						</div>
-					) ) }
-				</div>
+		<div className={ `snippets-app ${ layoutClass }` }>
+			{ layout === 'sidebar' ? (
+				<>
+					<SnippetSidebar
+						snippetOptions={ snippetOptions }
+						selected={ selected }
+						onSelectChange={ handleSelectChange }
+					/>
+					{ renderContent() }
+				</>
+			) : (
+				<>
+					<SnippetDropdown
+						snippetOptions={ snippetOptions }
+						selected={ selected }
+						onSelectChange={ handleSelectChange }
+					/>
+					{ renderContent() }
+				</>
 			) }
-			{ ( processedOutput || isRendering ) && (
-				<div className="snippetsapp-output-container">
-					<div className="snippetsapp-output-content">
-						{ isRendering && ! processedOutput && (
-							<div className="snippetsapp-loading">Generating snippet...</div>
-						) }
-						{ processedOutput && (
-							<>
-								<div
-									className="snippetsapp-output-text"
-									dangerouslySetInnerHTML={ { __html: processedOutput } }
-								/>
-								<button
-									type="button"
-									onClick={ handleCopy }
-									className="snippetsapp-copy-button"
-									disabled={ isRendering }
-								>
-									{ copied ? 'Copied!' : 'Copy' }
-								</button>
-							</>
-						) }
-					</div>
-				</div>
-			) }
-			{ error && <div className="snippetsapp-error-message">{ error }</div> }
 		</div>
 	);
 };

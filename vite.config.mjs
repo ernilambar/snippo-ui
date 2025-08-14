@@ -19,11 +19,12 @@ export default defineConfig( {
 			},
 		},
 		rollupOptions: {
-			external: [ 'react', 'react-dom' ],
+			external: [ 'react', 'react-dom', 'react-select' ],
 			output: {
 				globals: {
 					react: 'React',
 					'react-dom': 'ReactDOM',
+					'react-select': 'ReactSelect',
 				},
 			},
 		},
