@@ -9,7 +9,7 @@ const SnippetsApp = ( { api, options = {} } ) => {
 	const {
 		autoCopy = false,
 		autoCopyDebounceDelay = 500,
-		layout = 'dropdown' // New layout prop with dropdown as default
+		layout = 'dropdown'
 	} = options;
 
 	const [ snippets, setSnippets ] = useState( {} );

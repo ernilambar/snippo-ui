@@ -4,14 +4,10 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
+	transition: background-color 0.2s ease;
 }
 
-.snippet-select-option--selected {
-	background-color: #007cba;
-	color: white;
-}
-
-.snippet-select-option--focused {
+.snippet-select-option:hover {
 	background-color: #f0f0f0;
 }
 
@@ -32,9 +28,4 @@
 	font-weight: 400;
 	background-color: #dfe6ebff;
 	color: #666;
-}
-
-.snippet-select-option--selected .snippet-select-option-category {
-	background-color: rgba(255, 255, 255, 0.2);
-	color: white;
 }

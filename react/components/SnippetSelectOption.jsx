@@ -1,15 +1,9 @@
 import React from 'react';
 import '../css/components/snippet-select-option.css';
 
-const SnippetSelectOption = ( { data, isSelected, isFocused, innerProps } ) => {
-	const optionClasses = [
-		'snippet-select-option',
-		isSelected ? 'snippet-select-option--selected' : '',
-		isFocused ? 'snippet-select-option--focused' : ''
-	].filter(Boolean).join(' ');
-
+const SnippetSelectOption = ( { data, innerProps } ) => {
 	return (
-		<div { ...innerProps } className={ optionClasses }>
+		<div { ...innerProps } className="snippet-select-option">
 			<div className="snippet-select-option-title">{ data.label }</div>
 			{ data.categories && data.categories.length > 0 && (
 				<div className="snippet-select-option-categories">
@@ -21,7 +15,7 @@ const SnippetSelectOption = ( { data, isSelected, isFocused, innerProps } ) => {
 								backgroundColor: category.color || undefined
 							} }
 						>
-							{ category.title }
+							{ typeof category === 'string' ? category : category.title }
 						</span>
 					) ) }
 				</div>

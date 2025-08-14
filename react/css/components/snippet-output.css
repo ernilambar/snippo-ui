@@ -30,6 +30,10 @@
 	word-break: break-all;
 }
 
+.snippet-output-text code {
+	background: transparent;
+}
+
 .snippet-copy-button {
 	position: absolute;
 	top: 0;
