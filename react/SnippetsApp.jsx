@@ -50,9 +50,17 @@ const SnippetsApp = ( { api, options = {} } ) => {
 
 	useEffect( () => {
 		api.getSnippets()
-			.then( setSnippets )
+			.then( ( snippetsData ) => {
+				setSnippets( snippetsData );
+
+				// Auto-select first item in sidebar mode if no item is selected
+				if ( layout === 'sidebar' && ! selected && Object.keys( snippetsData ).length > 0 ) {
+					const firstSnippetKey = Object.keys( snippetsData )[ 0 ];
+					setSelected( firstSnippetKey );
+				}
+			} )
 			.catch( ( err ) => setError( err.message || 'Error fetching snippets' ) );
-	}, [ api ] );
+	}, [ api, layout, selected ] );
 
 	// Function to replace placeholders in the output.
 	const replacePlaceholders = useCallback( ( template, formData ) => {
