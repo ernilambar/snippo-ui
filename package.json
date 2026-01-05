@@ -1,6 +1,6 @@
 {
 	"name": "snippo-ui",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Reusable UI components and logic for Snippo snippet generation.",
 	"main": "dist/snippo-ui.cjs.js",
 	"module": "dist/snippo-ui.es.js",
