@@ -69,9 +69,11 @@ const SnippetsApp = ( { api, options = {} } ) => {
 		// Replace each field placeholder with its value.
 		Object.keys( formData ).forEach( ( fieldName ) => {
 			const value = formData[ fieldName ] || '';
-			// Replace only {{fieldName}} pattern.
-			const pattern = `{{${ fieldName }}}`;
-			result = result.replace( new RegExp( pattern.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ), 'g' ), value );
+			// Escape special regex characters in fieldName, but keep curly braces as literals.
+			const escapedFieldName = fieldName.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+			// Replace all instances of {{fieldName}} pattern.
+			const pattern = new RegExp( `\\{\\{${ escapedFieldName }\\}\\}`, 'g' );
+			result = result.replace( pattern, value );
 		} );
 
 		return result;
